@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class Group Form</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #f4f6f8;
+    color: #1f2937;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Bengali", "Hind Siliguri", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 16px; }
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+  h1 { font-size: 22px; margin: 0 0 8px 0; }
+  h2 { font-size: 18px; margin: 0 0 14px 0; }
+  .course-tag {
+    display: inline-block;
+    background: #e8f0fe;
+    color: #1a56db;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 4px 12px;
+    border-radius: 999px;
+  }
+  .field { margin-bottom: 16px; }
+  .label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+  input[type="text"], input[type="tel"], input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: inherit;
+  }
+  input:focus { outline: 2px solid #1a73e8; border-color: #1a73e8; }
+  .hint { font-size: 13px; color: #6b7280; margin: 6px 0 0 0; }
+  .pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill input { position: absolute; opacity: 0; pointer-events: none; }
+  .pill span {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 999px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  .pill input:checked + span {
+    background: #1a73e8;
+    border-color: #1a73e8;
+    color: #fff;
+    font-weight: 600;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip {
+    padding: 6px 12px;
+    border: 1px solid #c7d2fe;
+    background: #eef2ff;
+    color: #3730a3;
+    border-radius: 999px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .chip:active { background: #e0e7ff; }
+  .btn {
+    padding: 11px 18px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: inherit;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .btn-primary { background: #1a73e8; color: #fff; font-weight: 600; }
+  .btn-primary:disabled { background: #93c5fd; cursor: not-allowed; }
+  .btn-secondary { background: #fff; border-color: #cbd5e1; color: #1f2937; }
+  .btn-text { background: none; border: none; color: #1a73e8; font-weight: 600; padding: 8px 4px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+  .row .btn { flex: 1 1 auto; }
+  .warn {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    color: #92400e;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin: 12px 0;
+    font-size: 15px;
+  }
+  .ok {
+    background: #dcfce7;
+    border: 1px solid #22c55e;
+    color: #166534;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 14px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .ok-inline { color: #166534; font-size: 14px; margin-top: 8px; min-height: 20px; }
+  table.kv { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+  table.kv th, table.kv td {
+    text-align: left;
+    padding: 8px 6px;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+    font-size: 15px;
+  }
+  table.kv th { width: 45%; color: #4b5563; font-weight: 600; }
+  .admin-zone { text-align: center; margin-top: 8px; }
+  .admin-toggle {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 10px 16px;
+    font-family: inherit;
+    text-decoration: underline;
+  }
+  #pin-panel, #admin-panel { text-align: left; }
+  .chip-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+  .chip-del {
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+    border-radius: 6px;
+    padding: 2px 9px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .link-code {
+    display: block;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 13px;
+    word-break: break-all;
+    margin-bottom: 8px;
+  }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="card">
+    <h1>Class Group Form</h1>
+    <span class="course-tag" id="course-tag">Compiler Design</span>
+  </header>
+
+  <main>
+    <section id="form-screen" class="card">
+      <form id="group-form">
+        <div class="field">
+          <span class="label">Type</span>
+          <div class="pills">
+            <label class="pill"><input type="radio" name="type" value="Project" checked><span>Project</span></label>
+            <label class="pill"><input type="radio" name="type" value="Presentation"><span>Presentation</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="group-name">Group Name</label>
+          <input id="group-name" type="text" required placeholder="e.g. Team Alpha">
+        </div>
+
+        <div class="field">
+          <label class="label" for="topic">Topic</label>
+          <input id="topic" type="text" required placeholder="e.g. Lexical Analyzer">
+          <div class="chips" id="chips"></div>
+          <p class="hint">Nicher suggestion theke beche nao, ba nijer topic likho.</p>
+        </div>
+
+        <div class="field">
+          <span class="label">Members</span>
+          <div class="pills">
+            <label class="pill"><input type="radio" name="memberCount" value="2" checked><span>2 members</span></label>
+            <label class="pill"><input type="radio" name="memberCount" value="3"><span>3 members</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="m1name">Member 1 Name</label>
+          <input id="m1name" type="text" required>
+        </div>
+        <div class="field">
+          <label class="label" for="m1id">Member 1 ID</label>
+          <input id="m1id" type="text" required>
+        </div>
+        <div class="field">
+          <label class="label" for="m2name">Member 2 Name</label>
+          <input id="m2name" type="text" required>
+        </div>
+        <div class="field">
+          <label class="label" for="m2id">Member 2 ID</label>
+          <input id="m2id" type="text" required>
+        </div>
+        <div id="member3-block" hidden>
+          <div class="field">
+            <label class="label" for="m3name">Member 3 Name</label>
+            <input id="m3name" type="text">
+          </div>
+          <div class="field">
+            <label class="label" for="m3id">Member 3 ID</label>
+            <input id="m3id" type="text">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="m1phone">Member 1 Phone</label>
+          <input id="m1phone" type="tel" required placeholder="01XXXXXXXXX">
+        </div>
+
+        <div id="dup-warning" class="warn" hidden></div>
+        <button class="btn btn-primary" type="submit" style="width:100%;">Preview dekho</button>
+      </form>
+    </section>
+
+    <section id="preview-screen" class="card" hidden>
+      <h2>Preview — ekbar check koro</h2>
+      <table class="kv"><tbody id="preview-body"></tbody></table>
+      <div id="preview-dup-warning" class="warn" hidden></div>
+      <div class="row">
+        <button id="edit-btn" class="btn btn-secondary" type="button">এডিট করো</button>
+        <button id="confirm-btn" class="btn btn-primary" type="button">চেক করেছি, সাবমিট করো</button>
+      </div>
+    </section>
+
+    <section id="success-screen" class="card" hidden>
+      <div id="sheet-status" class="ok"></div>
+      <h2>Tomar group joma hoyeche</h2>
+      <table class="kv"><tbody id="summary-body"></tbody></table>
+      <div class="row">
+        <button id="download-one-btn" class="btn btn-secondary" type="button">CSV download</button>
+        <button id="copy-one-btn" class="btn btn-secondary" type="button">CSV copy koro</button>
+      </div>
+      <button id="again-btn" class="btn btn-text" type="button">Abar notun group joma dao</button>
+    </section>
+
+    <div class="admin-zone">
+      <button id="admin-toggle" class="admin-toggle" type="button">Admin</button>
+
+      <section id="pin-panel" class="card" hidden>
+        <h2>Admin PIN</h2>
+        <div class="field">
+          <label class="label" for="pin-input">PIN dao (6 digit)</label>
+          <input id="pin-input" type="password" inputmode="numeric" maxlength="6" placeholder="6 digit PIN" autocomplete="off">
+        </div>
+        <div id="pin-error" class="warn" hidden></div>
+        <div class="row">
+          <button id="pin-open-btn" class="btn btn-primary" type="button">Kholo</button>
+          <button id="pin-cancel-btn" class="btn btn-secondary" type="button">Batil</button>
+        </div>
+      </section>
+
+      <section id="admin-panel" class="card" hidden>
+        <h2>Admin Panel</h2>
+        <div class="field">
+          <label class="label" for="admin-course">Course name</label>
+          <input id="admin-course" type="text">
+        </div>
+        <div class="field">
+          <span class="label">Topic suggestion chips</span>
+          <div id="chip-list"></div>
+          <div class="row">
+            <input id="chip-new" type="text" placeholder="Notun topic" style="flex:1;">
+            <button id="chip-add-btn" class="btn btn-secondary" type="button">Add</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="label">Settings link code</span>
+          <code id="link-code" class="link-code"></code>
+          <button id="copy-link-btn" class="btn btn-secondary" type="button">Link code copy koro</button>
+          <p class="hint">Page-er link-er seshe ei code ta bosiye share koro.</p>
+        </div>
+        <div class="field">
+          <button id="admin-csv-btn" class="btn btn-primary" type="button">Sob group er CSV download</button>
+          <div id="admin-csv-status" class="hint"></div>
+        </div>
+        <div class="row">
+          <button id="admin-save-btn" class="btn btn-primary" type="button">Save koro</button>
+          <button id="admin-reset-btn" class="btn btn-secondary" type="button">Reset</button>
+          <button id="admin-close-btn" class="btn btn-secondary" type="button">Bondho koro</button>
+        </div>
+        <div id="admin-saved" class="ok-inline"></div>
+      </section>
+    </div>
+  </main>
+</div>
+<script>
+'use strict';
+
+var DEFAULT_COURSE = 'Compiler Design';
+var DEFAULT_TOPICS = ['Lexical Analyzer', 'Syntax Analyzer (Parser)', 'Semantic Analyzer', 'Intermediate Code Generator', 'Code Optimizer', 'Code Generator'];
+var SHEET_READ_URL = 'https://docs.google.com/spreadsheets/d/1UD_1MbhMNUL7sIPBfk_TdbZ4l14BdfWtxmgjDNZbw7E/gviz/tq?tqx=out:json&sheet=Form%20Responses%201';
+var FORM_RESPONSE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSccNsENVjZ6Ph0Dbkyy-Y5EUBy4sGwh_FY6L5OlbEFlcVjEJw/formResponse';
+var ADMIN_PIN = '800080';
+var STORAGE_KEY = 'cgf-settings-v1';
+var UNLOCK_KEY = 'cgf-admin-unlocked-v1';
+var ENTRY = {
+  course: 'entry.1906074580',
+  type: 'entry.1766089606',
+  groupName: 'entry.981465452',
+  topic: 'entry.270358967',
+  m1name: 'entry.740167164',
+  m1id: 'entry.1892566720',
+  m2name: 'entry.1975702413',
+  m2id: 'entry.1847770632',
+  m3name: 'entry.67410833',
+  m3id: 'entry.238249258',
+  m1phone: 'entry.1767378553'
+};
+var COLUMNS = ['Course', 'Type', 'Group Name', 'Topic', 'Member 1 Name', 'Member 1 ID', 'Member 2 Name', 'Member 2 ID', 'Member 3 Name', 'Member 3 ID', 'Member 1 Phone'];
+
+function el(id) { return document.getElementById(id); }
+function normKey(s) { return String(s == null ? '' : s).trim().toLowerCase().replace(/\s+/g, ' '); }
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function slug(s) {
+  return String(s == null ? '' : s).trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'course';
+}
+
+/* ---- Settings: URL params first, then localStorage, then defaults ---- */
+function loadSettings() {
+  var s = { course: DEFAULT_COURSE, topics: DEFAULT_TOPICS.slice() };
+  try {
+    var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+    if (saved) {
+      if (saved.course) s.course = saved.course;
+      if (Array.isArray(saved.topics) && saved.topics.length) s.topics = saved.topics;
+    }
+  } catch (e) {}
+  var params = new URLSearchParams(window.location.search);
+  var c = params.get('course');
+  if (c) s.course = c;
+  var t = params.get('topics');
+  if (t) {
+    var list = t.split(',').map(function (x) { return x.trim(); }).filter(Boolean);
+    if (list.length) s.topics = list;
+  }
+  return s;
+}
+var settings = loadSettings();
+
+function saveSettings() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(settings)); } catch (e) {}
+}
+
+function renderChips() {
+  var box = el('chips');
+  box.innerHTML = '';
+  settings.topics.forEach(function (t) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'chip';
+    b.textContent = t;
+    b.addEventListener('click', function () {
+      el('topic').value = t;
+      checkDuplicates();
+    });
+    box.appendChild(b);
+  });
+}
+
+function updateLinkCode() {
+  var q = '?course=' + encodeURIComponent(settings.course) +
+    '&topics=' + encodeURIComponent(settings.topics.join(','));
+  el('link-code').textContent = q;
+}
+
+function applySettings() {
+  el('course-tag').textContent = settings.course;
+  document.title = 'Class Group Form — ' + settings.course;
+  renderChips();
+  updateLinkCode();
+  if (!el('admin-panel').hidden) renderAdmin();
+}
+
+/* ---- Form values ---- */
+function memberCount() {
+  var r = document.querySelector('input[name="memberCount"]:checked');
+  return r ? parseInt(r.value, 10) : 2;
+}
+function syncMemberFields() {
+  var n = memberCount();
+  el('member3-block').hidden = n !== 3;
+  el('m3name').required = n === 3;
+  el('m3id').required = n === 3;
+}
+function formValues() {
+  var n = memberCount();
+  return {
+    course: settings.course,
+    type: (document.querySelector('input[name="type"]:checked') || {}).value || 'Project',
+    groupName: el('group-name').value.trim(),
+    topic: el('topic').value.trim(),
+    m1name: el('m1name').value.trim(),
+    m1id: el('m1id').value.trim(),
+    m2name: el('m2name').value.trim(),
+    m2id: el('m2id').value.trim(),
+    m3name: n === 3 ? el('m3name').value.trim() : '',
+    m3id: n === 3 ? el('m3id').value.trim() : '',
+    m1phone: el('m1phone').value.trim(),
+    members: n
+  };
+}
+function valuesToRow(v) {
+  return [v.course, v.type, v.groupName, v.topic, v.m1name, v.m1id, v.m2name, v.m2id, v.m3name, v.m3id, v.m1phone];
+}
+function valuesToRows(v) {
+  var rows = [
+    ['কোর্স', v.course],
+    ['ধরন', v.type],
+    ['গ্রুপের নাম', v.groupName],
+    ['টপিক', v.topic],
+    ['মেম্বার ১ এর নাম', v.m1name],
+    ['মেম্বার ১ এর আইডি', v.m1id],
+    ['মেম্বার ২ এর নাম', v.m2name],
+    ['মেম্বার ২ এর আইডি', v.m2id]
+  ];
+  if (v.members === 3) {
+    rows.push(['মেম্বার ৩ এর নাম', v.m3name]);
+    rows.push(['মেম্বার ৩ এর আইডি', v.m3id]);
+  }
+  rows.push(['মেম্বার ১ এর ফোন', v.m1phone]);
+  return rows;
+}
+function rowsHtml(v) {
+  return valuesToRows(v).map(function (r) {
+    return '<tr><th>' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>';
+  }).join('');
+}
+
+/* ---- Sheet read (public gviz endpoint, no sign-in) ---- */
+var sheetRows = null; /* null = not loaded / load failed */
+
+function fetchSheetRows() {
+  return fetch(SHEET_READ_URL).then(function (res) { return res.text(); }).then(function (text) {
+    var start = text.indexOf('{');
+    var end = text.lastIndexOf('}');
+    if (start < 0 || end < 0) throw new Error('bad response');
+    var data = JSON.parse(text.substring(start, end + 1));
+    var table = data.table;
+    var cols = (table.cols || []).map(function (c) { return c.label || ''; });
+    function colIdx(label, fallback) {
+      var i = cols.indexOf(label);
+      return i >= 0 ? i : fallback;
+    }
+    var idx = {
+      course: colIdx('Course', 1),
+      type: colIdx('Type', 2),
+      groupName: colIdx('Group Name', 3),
+      topic: colIdx('Topic', 4),
+      m1name: colIdx('Member 1 Name', 5),
+      m1id: colIdx('Member 1 ID', 6),
+      m2name: colIdx('Member 2 Name', 7),
+      m2id: colIdx('Member 2 ID', 8),
+      m3name: colIdx('Member 3 Name', 9),
+      m3id: colIdx('Member 3 ID', 10),
+      m1phone: colIdx('Member 1 Phone', 11)
+    };
+    function cell(row, i) {
+      var c = row.c && row.c[i];
+      if (!c) return '';
+      return c.v == null ? '' : String(c.v);
+    }
+    sheetRows = (table.rows || []).map(function (row) {
+      return [idx.course, idx.type, idx.groupName, idx.topic, idx.m1name, idx.m1id,
+        idx.m2name, idx.m2id, idx.m3name, idx.m3id, idx.m1phone].map(function (i) {
+        return cell(row, i);
+      });
+    });
+    return sheetRows;
+  }).catch(function () {
+    sheetRows = null;
+    return null;
+  });
+}
+
+/* ---- Duplicate detection ---- */
+function findDuplicate(v) {
+  if (!sheetRows) return null;
+  var g = normKey(v.groupName);
+  var t = normKey(v.topic);
+  for (var i = 0; i < sheetRows.length; i++) {
+    var r = sheetRows[i];
+    if (normKey(r[0]) !== normKey(v.course)) continue;
+    if (g && normKey(r[2]) === g) return { kind: 'group', group: r[2], topic: r[3] };
+    if (t && normKey(r[3]) === t) return { kind: 'topic', group: r[2], topic: r[3] };
+  }
+  return null;
+}
+function duplicateMessage(d, v) {
+  if (!d) return '';
+  if (d.kind === 'group') return '“' + v.groupName + '” নামের গ্রুপটি আগেই জমা হয়েছে। অন্য নাম দাও।';
+  return '“' + v.topic + '” টপিকটি আগেই নেওয়া হয়েছে (' + d.group + ' গ্রুপ)। অন্য টপিক বেছে নাও।';
+}
+function checkDuplicates() {
+  var v = formValues();
+  var d = findDuplicate(v);
+  var box = el('dup-warning');
+  if (d) {
+    box.textContent = duplicateMessage(d, v);
+    box.hidden = false;
+  } else {
+    box.textContent = '';
+    box.hidden = true;
+  }
+  return d;
+}
+
+/* ---- Preview-first submit ---- */
+function showPreview() {
+  var v = formValues();
+  el('preview-body').innerHTML = rowsHtml(v);
+  var d = findDuplicate(v);
+  var box = el('preview-dup-warning');
+  var btn = el('confirm-btn');
+  if (d) {
+    box.textContent = duplicateMessage(d, v);
+    box.hidden = false;
+    btn.disabled = true;
+  } else {
+    box.textContent = '';
+    box.hidden = true;
+    btn.disabled = false;
+  }
+  el('form-screen').hidden = true;
+  el('success-screen').hidden = true;
+  el('preview-screen').hidden = false;
+  window.scrollTo(0, 0);
+}
+
+function submitToSheet(v) {
+  var body = new URLSearchParams();
+  body.set(ENTRY.course, v.course);
+  body.set(ENTRY.type, v.type);
+  body.set(ENTRY.groupName, v.groupName);
+  body.set(ENTRY.topic, v.topic);
+  body.set(ENTRY.m1name, v.m1name);
+  body.set(ENTRY.m1id, v.m1id);
+  body.set(ENTRY.m2name, v.m2name);
+  body.set(ENTRY.m2id, v.m2id);
+  body.set(ENTRY.m3name, v.m3name);
+  body.set(ENTRY.m3id, v.m3id);
+  body.set(ENTRY.m1phone, v.m1phone);
+  return fetch(FORM_RESPONSE_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: body.toString()
+  }).catch(function () { /* fire-and-forget */ });
+}
+
+/* ---- CSV helpers ---- */
+function csvCell(x) {
+  var s = String(x == null ? '' : x);
+  if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+  return s;
+}
+function rowsToCsv(rows) {
+  return '\uFEFF' + rows.map(function (r) {
+    return r.map(csvCell).join(',');
+  }).join('\r\n');
+}
+function downloadCsv(filename, text) {
+  var blob = new Blob([text], { type: 'text/csv;charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+function fallbackCopy(text) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  ta.remove();
+}
+function copyText(text, btn) {
+  function done() {
+    if (!btn) return;
+    var old = btn.textContent;
+    btn.textContent = 'Copy hoyeche ✓';
+    setTimeout(function () { btn.textContent = old; }, 2000);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+  } else {
+    fallbackCopy(text);
+    done();
+  }
+}
+
+/* ---- Success screen ---- */
+var lastSubmitted = null;
+function renderSummary(v) {
+  lastSubmitted = v;
+  el('sheet-status').textContent = 'Sheet-e pathano hoyeche ✓';
+  el('summary-body').innerHTML = rowsHtml(v);
+}
+
+/* ---- Admin: PIN + panel ---- */
+function isUnlocked() {
+  try { return sessionStorage.getItem(UNLOCK_KEY) === '1'; } catch (e) { return false; }
+}
+function tryUnlock() {
+  var pin = el('pin-input').value.trim();
+  if (pin === ADMIN_PIN) {
+    try { sessionStorage.setItem(UNLOCK_KEY, '1'); } catch (e) {}
+    el('pin-error').hidden = true;
+    el('pin-input').value = '';
+    el('pin-panel').hidden = true;
+    el('admin-panel').hidden = false;
+    renderAdmin();
+  } else {
+    el('pin-error').textContent = 'ভুল PIN। আবার চেষ্টা করো।';
+    el('pin-error').hidden = false;
+  }
+}
+function renderAdmin() {
+  el('admin-course').value = settings.course;
+  renderChipEditor();
+  updateLinkCode();
+}
+function renderChipEditor() {
+  var list = el('chip-list');
+  list.innerHTML = '';
+  settings.topics.forEach(function (t, i) {
+    var row = document.createElement('div');
+    row.className = 'chip-row';
+    var span = document.createElement('span');
+    span.textContent = t;
+    var del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'chip-del';
+    del.textContent = '✕';
+    del.setAttribute('aria-label', 'Remove ' + t);
+    del.addEventListener('click', function () {
+      settings.topics.splice(i, 1);
+      renderChipEditor();
+    });
+    row.appendChild(span);
+    row.appendChild(del);
+    list.appendChild(row);
+  });
+}
+
+/* ---- Wire up events ---- */
+document.querySelectorAll('input[name="memberCount"]').forEach(function (r) {
+  r.addEventListener('change', syncMemberFields);
+});
+el('group-name').addEventListener('input', checkDuplicates);
+el('topic').addEventListener('input', checkDuplicates);
+
+el('group-form').addEventListener('submit', function (e) {
+  e.preventDefault();
+  if (!el('group-form').reportValidity()) return;
+  showPreview();
+});
+el('edit-btn').addEventListener('click', function () {
+  el('preview-screen').hidden = true;
+  el('form-screen').hidden = false;
+  window.scrollTo(0, 0);
+});
+el('confirm-btn').addEventListener('click', function () {
+  var v = formValues();
+  if (findDuplicate(v)) return;
+  el('confirm-btn').disabled = true;
+  submitToSheet(v).then(function () {
+    if (sheetRows) sheetRows.push(valuesToRow(v));
+    renderSummary(v);
+    el('preview-screen').hidden = true;
+    el('success-screen').hidden = false;
+    window.scrollTo(0, 0);
+    el('confirm-btn').disabled = false;
+  });
+});
+el('download-one-btn').addEventListener('click', function () {
+  if (!lastSubmitted) return;
+  downloadCsv(slug(lastSubmitted.groupName) + '-group.csv',
+    rowsToCsv([COLUMNS, valuesToRow(lastSubmitted)]));
+});
+el('copy-one-btn').addEventListener('click', function () {
+  if (!lastSubmitted) return;
+  copyText(rowsToCsv([COLUMNS, valuesToRow(lastSubmitted)]), el('copy-one-btn'));
+});
+el('again-btn').addEventListener('click', function () {
+  el('group-form').reset();
+  syncMemberFields();
+  checkDuplicates();
+  el('success-screen').hidden = true;
+  el('form-screen').hidden = false;
+  window.scrollTo(0, 0);
+});
+
+el('admin-toggle').addEventListener('click', function () {
+  if (isUnlocked()) {
+    el('admin-panel').hidden = !el('admin-panel').hidden;
+    el('pin-panel').hidden = true;
+    if (!el('admin-panel').hidden) renderAdmin();
+  } else {
+    el('pin-panel').hidden = false;
+    el('admin-panel').hidden = true;
+    el('pin-input').focus();
+  }
+});
+el('pin-open-btn').addEventListener('click', tryUnlock);
+el('pin-input').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') tryUnlock();
+});
+el('pin-cancel-btn').addEventListener('click', function () {
+  el('pin-panel').hidden = true;
+  el('pin-input').value = '';
+  el('pin-error').hidden = true;
+});
+el('chip-add-btn').addEventListener('click', function () {
+  var v = el('chip-new').value.trim();
+  if (v && settings.topics.indexOf(v) === -1) settings.topics.push(v);
+  el('chip-new').value = '';
+  renderChipEditor();
+});
+el('chip-new').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') { e.preventDefault(); el('chip-add-btn').click(); }
+});
+el('admin-save-btn').addEventListener('click', function () {
+  var c = el('admin-course').value.trim();
+  if (c) settings.course = c;
+  saveSettings();
+  applySettings();
+  el('admin-saved').textContent = 'Save hoyeche ✓';
+  setTimeout(function () { el('admin-saved').textContent = ''; }, 2000);
+});
+el('admin-reset-btn').addEventListener('click', function () {
+  settings = { course: DEFAULT_COURSE, topics: DEFAULT_TOPICS.slice() };
+  try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  applySettings();
+  renderAdmin();
+  el('admin-saved').textContent = 'Default-e fera hoyeche ✓';
+  setTimeout(function () { el('admin-saved').textContent = ''; }, 2000);
+});
+el('admin-close-btn').addEventListener('click', function () {
+  el('admin-panel').hidden = true;
+});
+el('copy-link-btn').addEventListener('click', function () {
+  copyText(el('link-code').textContent, el('copy-link-btn'));
+});
+el('admin-csv-btn').addEventListener('click', function () {
+  var status = el('admin-csv-status');
+  var btn = el('admin-csv-btn');
+  btn.disabled = true;
+  status.textContent = 'Sheet theke ana hocche...';
+  function build(rows) {
+    if (!rows) {
+      status.textContent = 'Sheet load kora jayni. Internet check kore abar chesta koro.';
+      btn.disabled = false;
+      return;
+    }
+    var mine = rows.filter(function (r) {
+      return normKey(r[0]) === normKey(settings.course);
+    });
+    if (!mine.length) {
+      status.textContent = 'Ei course-er kono group ekhono joma hoyni.';
+      btn.disabled = false;
+      return;
+    }
+    downloadCsv('all-groups-' + slug(settings.course) + '.csv',
+      rowsToCsv([COLUMNS].concat(mine)));
+    status.textContent = mine.length + ' ta group-er CSV download hocche.';
+    btn.disabled = false;
+  }
+  if (sheetRows) {
+    build(sheetRows);
+  } else {
+    fetchSheetRows().then(function (rows) { build(rows); });
+  }
+});
+
+/* ---- Init ---- */
+applySettings();
+syncMemberFields();
+fetchSheetRows().then(function () { checkDuplicates(); });
+</script>
+</body>
+</html>
