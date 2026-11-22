@@ -188,7 +188,7 @@
           <label class="label" for="topic">Topic</label>
           <input id="topic" type="text" required placeholder="e.g. Lexical Analyzer">
           <div class="chips" id="chips"></div>
-          <p class="hint">Nicher suggestion theke beche nao, ba nijer topic likho.</p>
+          <p class="hint">নিচের সাজেশন থেকে বেছে নাও, বা নিজের টপিক লেখো।</p>
         </div>
 
         <div class="field">
@@ -232,12 +232,12 @@
         </div>
 
         <div id="dup-warning" class="warn" hidden></div>
-        <button class="btn btn-primary" type="submit" style="width:100%;">Preview dekho</button>
+        <button class="btn btn-primary" type="submit" style="width:100%;">প্রিভিউ দেখো</button>
       </form>
     </section>
 
     <section id="preview-screen" class="card" hidden>
-      <h2>Preview — ekbar check koro</h2>
+      <h2>প্রিভিউ — একবার চেক করো</h2>
       <table class="kv"><tbody id="preview-body"></tbody></table>
       <div id="preview-dup-warning" class="warn" hidden></div>
       <div class="row">
@@ -248,13 +248,13 @@
 
     <section id="success-screen" class="card" hidden>
       <div id="sheet-status" class="ok"></div>
-      <h2>Tomar group joma hoyeche</h2>
+      <h2>তোমার গ্রুপ জমা হয়েছে</h2>
       <table class="kv"><tbody id="summary-body"></tbody></table>
       <div class="row">
         <button id="download-one-btn" class="btn btn-secondary" type="button">CSV download</button>
-        <button id="copy-one-btn" class="btn btn-secondary" type="button">CSV copy koro</button>
+        <button id="copy-one-btn" class="btn btn-secondary" type="button">CSV কপি করো</button>
       </div>
-      <button id="again-btn" class="btn btn-text" type="button">Abar notun group joma dao</button>
+      <button id="again-btn" class="btn btn-text" type="button">আবার নতুন গ্রুপ জমা দাও</button>
     </section>
 
     <div class="admin-zone">
@@ -263,13 +263,13 @@
       <section id="pin-panel" class="card" hidden>
         <h2>Admin PIN</h2>
         <div class="field">
-          <label class="label" for="pin-input">PIN dao (6 digit)</label>
-          <input id="pin-input" type="password" inputmode="numeric" maxlength="6" placeholder="6 digit PIN" autocomplete="off">
+          <label class="label" for="pin-input">PIN দাও (৬ ডিজিট)</label>
+          <input id="pin-input" type="password" inputmode="numeric" maxlength="6" placeholder="৬ ডিজিটের PIN" autocomplete="off">
         </div>
         <div id="pin-error" class="warn" hidden></div>
         <div class="row">
-          <button id="pin-open-btn" class="btn btn-primary" type="button">Kholo</button>
-          <button id="pin-cancel-btn" class="btn btn-secondary" type="button">Batil</button>
+          <button id="pin-open-btn" class="btn btn-primary" type="button">খোলো</button>
+          <button id="pin-cancel-btn" class="btn btn-secondary" type="button">বাতিল</button>
         </div>
       </section>
 
@@ -283,24 +283,24 @@
           <span class="label">Topic suggestion chips</span>
           <div id="chip-list"></div>
           <div class="row">
-            <input id="chip-new" type="text" placeholder="Notun topic" style="flex:1;">
+            <input id="chip-new" type="text" placeholder="নতুন টপিক" style="flex:1;">
             <button id="chip-add-btn" class="btn btn-secondary" type="button">Add</button>
           </div>
         </div>
         <div class="field">
           <span class="label">Settings link code</span>
           <code id="link-code" class="link-code"></code>
-          <button id="copy-link-btn" class="btn btn-secondary" type="button">Link code copy koro</button>
-          <p class="hint">Page-er link-er seshe ei code ta bosiye share koro.</p>
+          <button id="copy-link-btn" class="btn btn-secondary" type="button">লিংক কোড কপি করো</button>
+          <p class="hint">পেজের লিংকের শেষে এই কোডটা বসিয়ে শেয়ার করো।</p>
         </div>
         <div class="field">
-          <button id="admin-csv-btn" class="btn btn-primary" type="button">Sob group er CSV download</button>
+          <button id="admin-csv-btn" class="btn btn-primary" type="button">সব গ্রুপের CSV ডাউনলোড</button>
           <div id="admin-csv-status" class="hint"></div>
         </div>
         <div class="row">
-          <button id="admin-save-btn" class="btn btn-primary" type="button">Save koro</button>
+          <button id="admin-save-btn" class="btn btn-primary" type="button">সেভ করো</button>
           <button id="admin-reset-btn" class="btn btn-secondary" type="button">Reset</button>
-          <button id="admin-close-btn" class="btn btn-secondary" type="button">Bondho koro</button>
+          <button id="admin-close-btn" class="btn btn-secondary" type="button">বন্ধ করো</button>
         </div>
         <div id="admin-saved" class="ok-inline"></div>
       </section>
@@ -608,7 +608,7 @@ function copyText(text, btn) {
   function done() {
     if (!btn) return;
     var old = btn.textContent;
-    btn.textContent = 'Copy hoyeche ✓';
+    btn.textContent = 'কপি হয়েছে ✓';
     setTimeout(function () { btn.textContent = old; }, 2000);
   }
   if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -623,7 +623,7 @@ function copyText(text, btn) {
 var lastSubmitted = null;
 function renderSummary(v) {
   lastSubmitted = v;
-  el('sheet-status').textContent = 'Sheet-e pathano hoyeche ✓';
+  el('sheet-status').textContent = 'শিটে পাঠানো হয়েছে ✓';
   el('summary-body').innerHTML = rowsHtml(v);
 }
 
@@ -755,7 +755,7 @@ el('admin-save-btn').addEventListener('click', function () {
   if (c) settings.course = c;
   saveSettings();
   applySettings();
-  el('admin-saved').textContent = 'Save hoyeche ✓';
+  el('admin-saved').textContent = 'সেভ হয়েছে ✓';
   setTimeout(function () { el('admin-saved').textContent = ''; }, 2000);
 });
 el('admin-reset-btn').addEventListener('click', function () {
@@ -763,7 +763,7 @@ el('admin-reset-btn').addEventListener('click', function () {
   try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
   applySettings();
   renderAdmin();
-  el('admin-saved').textContent = 'Default-e fera hoyeche ✓';
+  el('admin-saved').textContent = 'ডিফল্টে ফেরা হয়েছে ✓';
   setTimeout(function () { el('admin-saved').textContent = ''; }, 2000);
 });
 el('admin-close-btn').addEventListener('click', function () {
@@ -776,10 +776,10 @@ el('admin-csv-btn').addEventListener('click', function () {
   var status = el('admin-csv-status');
   var btn = el('admin-csv-btn');
   btn.disabled = true;
-  status.textContent = 'Sheet theke ana hocche...';
+  status.textContent = 'শিট থেকে আনা হচ্ছে...';
   function build(rows) {
     if (!rows) {
-      status.textContent = 'Sheet load kora jayni. Internet check kore abar chesta koro.';
+      status.textContent = 'শিট লোড করা যায়নি। ইন্টারনেট চেক করে আবার চেষ্টা করো।';
       btn.disabled = false;
       return;
     }
@@ -787,13 +787,13 @@ el('admin-csv-btn').addEventListener('click', function () {
       return normKey(r[0]) === normKey(settings.course);
     });
     if (!mine.length) {
-      status.textContent = 'Ei course-er kono group ekhono joma hoyni.';
+      status.textContent = 'এই কোর্সের কোনো গ্রুপ এখনো জমা হয়নি।';
       btn.disabled = false;
       return;
     }
     downloadCsv('all-groups-' + slug(settings.course) + '.csv',
       rowsToCsv([COLUMNS].concat(mine)));
-    status.textContent = mine.length + ' ta group-er CSV download hocche.';
+    status.textContent = mine.length + ' টা গ্রুপের CSV ডাউনলোড হচ্ছে।';
     btn.disabled = false;
   }
   if (sheetRows) {
