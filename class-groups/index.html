@@ -185,10 +185,10 @@
         </div>
 
         <div class="field">
-          <label class="label" for="topic">Topic</label>
-          <input id="topic" type="text" required placeholder="e.g. Lexical Analyzer">
+          <label class="label" for="topic">Topic (ঐচ্ছিক)</label>
+          <input id="topic" type="text" placeholder="e.g. Lexical Analyzer">
           <div class="chips" id="chips"></div>
-          <p class="hint">নিচের সাজেশন থেকে বেছে নাও, বা নিজের টপিক লেখো।</p>
+          <p class="hint">ঐচ্ছিক — নিচের সাজেশন থেকে বেছে নাও, বা নিজের টপিক লেখো।</p>
         </div>
 
         <div class="field">
@@ -434,7 +434,7 @@ function valuesToRows(v) {
     ['কোর্স', v.course],
     ['ধরন', v.type],
     ['গ্রুপের নাম', v.groupName],
-    ['টপিক', v.topic],
+    ['টপিক', v.topic || 'দেওয়া হয়নি'],
     ['মেম্বার ১ এর নাম', v.m1name],
     ['মেম্বার ১ এর আইডি', v.m1id],
     ['মেম্বার ২ এর নাম', v.m2name],
@@ -558,7 +558,7 @@ function submitToSheet(v) {
   body.set(ENTRY.course, v.course);
   body.set(ENTRY.type, v.type);
   body.set(ENTRY.groupName, v.groupName);
-  body.set(ENTRY.topic, v.topic);
+  if (v.topic) body.set(ENTRY.topic, v.topic);
   body.set(ENTRY.m1name, v.m1name);
   body.set(ENTRY.m1id, v.m1id);
   body.set(ENTRY.m2name, v.m2name);
