@@ -177,6 +177,19 @@
       .section-lede { color: var(--ink-soft); margin: 0 0 26px; max-width: 640px; }
       .about-text { max-width: 700px; margin: 0; font-size: 18px; }
 
+      /* ---------- Experience ---------- */
+      .exp { display: grid; gap: 14px; }
+      .exp-item {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 20px 22px;
+      }
+      .exp-item h3 { margin: 0 0 2px; font-size: 17px; font-weight: 650; }
+      .exp-item .meta { color: var(--teal); font-size: 14.5px; font-weight: 600; margin: 0 0 6px; }
+      .exp-item p { margin: 0; color: var(--ink-soft); font-size: 15.5px; }
+
       /* ---------- Why hire me ---------- */
       .why {
         display: grid;
@@ -429,6 +442,29 @@
       <section id="about">
         <p class="eyebrow">About</p>
         <p class="about-text">I'm Saif, a CSE student from Bangladesh working online as a virtual assistant. I already do this work every day — managing email, calendars, data and files for my own online business, and helping local business clients with the same tasks. You get careful, organised support from someone who relies on these systems himself.</p>
+      </section>
+
+      <section id="experience">
+        <p class="eyebrow">Experience</p>
+        <h2>What I've done</h2>
+        <p class="section-lede">Real work, in my own words — no padding.</p>
+        <div class="exp">
+          <div class="exp-item">
+            <h3>Virtual Assistant (self-employed)</h3>
+            <p class="meta">2025 – present</p>
+            <p>Email, calendar, data entry, research and social media for my own online business and local business clients.</p>
+          </div>
+          <div class="exp-item">
+            <h3>Technical Volunteer — ICPC 2025 Dhaka Regional</h3>
+            <p class="meta">Technical Department · 2025</p>
+            <p>Volunteer in the Technical Department at the ICPC 2025 Dhaka Regional programming contest.</p>
+          </div>
+          <div class="exp-item">
+            <h3>Video Creator &amp; Social Media Manager</h3>
+            <p class="meta">2026 – present</p>
+            <p>Creates short videos and manages pages on YouTube, Facebook, Instagram and X.</p>
+          </div>
+        </div>
       </section>
 
       <section id="why">
