@@ -106,14 +106,10 @@
       .monogram {
         width: 64px; height: 64px;
         border-radius: 50%;
-        background: #ffffff;
-        color: #0b5a54;
-        font-size: 30px;
-        font-weight: 800;
-        display: flex; align-items: center; justify-content: center;
+        object-fit: cover;
         flex: 0 0 auto;
+        border: 3px solid rgba(255,255,255,0.85);
       }
-      @media (prefers-color-scheme: dark) { .monogram { background: #e6f4f1; color: #0d2b28; } }
       .availability {
         display: inline-flex; align-items: center; gap: 8px;
         font-size: 14px;
@@ -426,7 +422,7 @@
     <header id="top">
       <div class="wrap">
         <div class="header-top">
-          <div class="monogram" aria-hidden="true">S</div>
+          <img class="monogram" src="photo.jpg" alt="Photo of Saif" />
           <span class="availability"><span class="dot" aria-hidden="true"></span> Available for new clients</span>
         </div>
         <h1>Saif — Virtual Assistant</h1>
