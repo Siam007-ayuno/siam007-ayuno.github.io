@@ -138,6 +138,22 @@
         opacity: 0.93;
       }
       .header-actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; }
+      .hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 36px; align-items: center; }
+      .hero-text .availability { margin-bottom: 18px; }
+      .hero-image img {
+        width: 100%;
+        max-width: 420px;
+        height: auto;
+        border-radius: 18px;
+        display: block;
+        margin: 0 auto;
+        border: 3px solid rgba(255,255,255,0.25);
+        box-shadow: 0 12px 32px rgba(0,0,0,0.28);
+      }
+      @media (max-width: 720px) {
+        .hero { grid-template-columns: 1fr; gap: 24px; }
+        .hero-image img { max-width: 340px; }
+      }
       .btn {
         display: inline-flex;
         align-items: center;
@@ -420,16 +436,18 @@
     </nav>
 
     <header id="top">
-      <div class="wrap">
-        <div class="header-top">
-          <img class="monogram" src="photo.jpg" alt="Photo of Saif" />
+      <div class="wrap hero">
+        <div class="hero-text">
           <span class="availability"><span class="dot" aria-hidden="true"></span> Available for new clients</span>
+          <h1>Saif — Virtual Assistant</h1>
+          <p class="tagline">Email, calendar, data entry, research and social media — handled daily, checked twice.</p>
+          <div class="header-actions">
+            <a class="btn btn-light" href="#hire">How to hire me</a>
+            <a class="btn btn-outline" href="#samples">See work samples</a>
+          </div>
         </div>
-        <h1>Saif — Virtual Assistant</h1>
-        <p class="tagline">Email, calendar, data entry, research and social media — handled daily, checked twice.</p>
-        <div class="header-actions">
-          <a class="btn btn-light" href="#hire">How to hire me</a>
-          <a class="btn btn-outline" href="#samples">See work samples</a>
+        <div class="hero-image">
+          <img src="va-promo.jpg" alt="Saif — Virtual Assistant. Services: data entry and research, administrative support, email management, Excel and Google Sheets, web research." />
         </div>
       </div>
     </header>
@@ -459,6 +477,16 @@
             <h3>Video Creator &amp; Social Media Manager</h3>
             <p class="meta">2026 – present</p>
             <p>Creates short videos and manages pages on YouTube, Facebook, Instagram and X.</p>
+          </div>
+          <div class="exp-item">
+            <h3>BSc Computer Science Student — BUBT</h3>
+            <p class="meta">2024 – present</p>
+            <p>Studying Computer Science at Bangladesh University of Business and Technology — the technical background behind my organised VA systems.</p>
+          </div>
+          <div class="exp-item">
+            <h3>ICPC 2024 Participant</h3>
+            <p class="meta">Programming contest · 2024</p>
+            <p>Competed in the ICPC 2024 programming contest, then returned in 2025 as a Technical Department volunteer.</p>
           </div>
         </div>
       </section>
